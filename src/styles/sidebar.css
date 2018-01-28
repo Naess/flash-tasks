@@ -1,0 +1,44 @@
+.sidebar-heading {
+  padding-left: 8px;
+  padding-left: 8px;
+}
+
+.sidebar-lists {
+  list-style: none;
+  padding-left: 0px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.sidebar-lists li {
+  border-top: 1px solid #ccc;
+  padding: 8px;
+}
+
+.sidebar-lists li:hover {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.sidebar-lists li:last-of-type {
+  border-bottom: 1px solid #ccc;
+}
+
+.sidebar-create-list-btn {
+  padding: 10px;
+}
+
+.sidebar-create-list-btn:hover {
+  cursor: pointer;
+  color: grey;
+}
+
+.sidebar-create-list-input {
+  clear: both;
+  padding: 5px;
+}
+
+.sidebar-create-list-input button {
+  margin-top: 3px;
+  margin-right: 3px;
+}

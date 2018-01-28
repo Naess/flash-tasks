@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #a4cdc8;
+  padding: 1px;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.menu-icon {
+    height: 35px;
+    position: absolute;
+    left: 15px;
+    top: 15px;
+}
+
+.menu-icon:hover {
+  cursor: pointer;
+}

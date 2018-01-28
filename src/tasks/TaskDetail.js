@@ -9,7 +9,6 @@ class TaskDetail extends Component {
       estimate: props.data.estimate || '',
       id: props.data.id || ''
     }
-    console.log(this.state)
     this.handleChange = this.handleChange.bind(this)
   }
   render() {
