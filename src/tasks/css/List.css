@@ -1,0 +1,22 @@
+.list-container {
+  width: 400px;
+  margin: 10px auto;
+  background-color: #f9f9f9;
+  padding: 10px;
+  padding-top: 15px;
+}
+
+.list-title {
+  font-weight: bold;
+}
+
+ul.list{
+  padding: 0;
+}
+
+.list-item {
+  list-style: none;
+  border: 1px solid grey;
+  padding: 5px;
+  margin: 3px auto;
+}

@@ -1,5 +1,6 @@
 # Flash Tasks
 
+A shared task list designed to help ad-hoc teams quickly organize, prioritize and complete tasks.
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 ## Available Scripts
