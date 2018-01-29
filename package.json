@@ -2,7 +2,7 @@
   "name": "flash-tasks",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://naess.github.io/flash-tasks/",
+  "homepage": "https://Naess.github.io/flash-tasks",
   "dependencies": {
     "gh-pages": "^1.1.0",
     "react": "^16.2.0",
