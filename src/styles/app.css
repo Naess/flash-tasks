@@ -11,6 +11,11 @@
   font-size: large;
 }
 
+.App-title {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
 .menu-icon {
     height: 35px;
     position: absolute;

@@ -1,22 +1,70 @@
 .list-container {
   width: 400px;
   margin: 10px auto;
-  background-color: #f9f9f9;
   padding: 10px;
   padding-top: 15px;
 }
 
 .list-title {
   font-weight: bold;
+  font-size: 1.2em;
 }
 
-ul.list{
+ul.list {
   padding: 0;
+  list-style: none;
+}
+
+.edit-task-btn {
+  float: right;
+  background-color: transparent;
 }
 
 .list-item {
-  list-style: none;
-  border: 1px solid grey;
-  padding: 5px;
+  border: 1px solid #ccc;
+  padding: 6px;
   margin: 3px auto;
+  background-color: #fff;
+  text-align: left;
+}
+
+.task-title {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+.task-edit {
+  float: right;
+  margin-top: -7px;
+}
+
+.list-item button:hover {
+  color: #ccc;
+}
+
+.list-item button {
+  background-color: transparent;
+}
+
+.task-description {
+  margin-bottom: 10px;
+}
+
+.status-not-started {
+  background-color: #fff;
+}
+
+.status-in-progress {
+  background-color: #a4cdc8;
+}
+
+.status-done {
+  background-color: #a8cda4;
+}
+
+.grabbable {
+    cursor: move;
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
 }

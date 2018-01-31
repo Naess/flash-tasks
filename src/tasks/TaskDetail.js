@@ -7,36 +7,58 @@ class TaskDetail extends Component {
       title: props.data.title || '',
       description: props.data.description || '',
       estimate: props.data.estimate || '',
-      id: props.data.id || ''
+      id: props.data.id || '',
+      status: props.data.status || 'Not Started'
     }
+    this.statuses = ['Not Started', 'In Progress', 'Done']
     this.handleChange = this.handleChange.bind(this)
   }
   render() {
     return (
-      <div>
+      <div className="create-task">
         <label>Title</label><br/>
         <input name="title"
           onChange={this.handleChange}
           value={this.state.title}
+          className="form-control"
         />
         <br/><label>Description</label><br/>
-        <input name="description"
+        <textarea name="description"
           onChange={this.handleChange}
           value={this.state.description}
+          className="form-control"
         />
         <br/><label>Estimate</label><br/>
         <input name="estimate"
           onChange={this.handleChange}
           value={this.state.estimate}
+          className="form-control"
         />
+        <br/><label>Status</label><br/>
+        <select name="status"
+          onChange={this.handleChange}
+          value={this.state.status}
+          className="form-control"
+        >
+          {this.statuses.map(status =>
+            <option
+              value={status}
+              key={status}>{status}</option>
+          )}
+        </select>
         <br/><br/>
-        <button onClick={() => {
-          this.props.onSave(this.state)
-          this.props.onClose()
-        }}>
+        <button
+          onClick={() => {
+            this.props.onSave(this.state)
+            this.props.onClose()
+          }}
+          className="btn">
           Save
         </button>
-        <button onClick={() => this.props.onClose()}>
+        <button
+          onClick={() => this.props.onClose()}
+          className="btn"
+          style={{marginLeft: "3px"}}>
           Close
         </button>
       </div>

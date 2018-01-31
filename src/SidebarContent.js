@@ -25,8 +25,7 @@ class SidebarContent extends Component {
       return
     }
     this.props.createList({
-      name: this.state.listName,
-      tasks: []
+      name: this.state.listName
     })
     this.setState({ listName: '' })
   }
@@ -52,7 +51,7 @@ class SidebarContent extends Component {
           <span
             className="sidebar-create-list-btn"
             onClick={() => this.showCreateList(true)}>
-            Create List +
+            + Create List
           </span>
           {this.state.showCreateBtn &&
             <div className="sidebar-create-list-input">
@@ -63,10 +62,13 @@ class SidebarContent extends Component {
                 placeholder="List name"/>
               <br />
               <button
-                 onClick={() => this.createList()}>
+                 onClick={() => this.createList()}
+                 className="btn">
                  Create
               </button>
-              <button onClick={() => this.showCreateList(false)}>
+              <button
+                onClick={() => this.showCreateList(false)}
+                className="btn">
                 Cancel
               </button>
             </div>

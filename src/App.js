@@ -3,8 +3,10 @@ import List from './tasks/List.js'
 import Sidebar from 'react-sidebar'
 import MenuIcon from './menu-icon.svg'
 import SidebarContent from './SidebarContent.js'
+import Immutable from 'immutable'
 import './styles/app.css'
 import './styles/sidebar.css'
+import {reorderImmutable} from 'react-reorder';
 
 class App extends Component {
   constructor(props) {
@@ -14,11 +16,11 @@ class App extends Component {
       lists: [
         {
           name: 'First list',
-          tasks: []
+          tasks: Immutable.List()
         },
         {
           name: 'Second list',
-          tasks: []
+          tasks: Immutable.List()
         }
       ],
       currentListIndex: 0
@@ -28,6 +30,7 @@ class App extends Component {
     this.setCurrentList = this.setCurrentList.bind(this)
     this.createTask = this.createTask.bind(this)
     this.updateTask = this.updateTask.bind(this)
+    this.onListReorder = this.onListReorder.bind(this)
   }
 
   onSetSidebarOpen(open) {
@@ -35,6 +38,7 @@ class App extends Component {
   }
 
   addList(list) {
+    list.tasks = Immutable.List()
     this.setState(prevState => ({
       lists: prevState.lists.concat(list)
     }))
@@ -47,7 +51,8 @@ class App extends Component {
   createTask(data) {
     this.setState(prevState => {
       let newState = prevState
-      newState.lists[prevState.currentListIndex].tasks.push(data)
+      const newTaskList = newState.lists[prevState.currentListIndex].tasks.push(data)
+      newState.lists[prevState.currentListIndex].tasks = newTaskList
       return newState
     })
   }
@@ -57,7 +62,17 @@ class App extends Component {
       let currentList = prevState.lists[prevState.currentListIndex]
       const index = currentList.tasks.findIndex(task => task.id === data.id)
       let newState = prevState
-      newState.lists[prevState.currentListIndex].tasks[index] = data
+      const updatedTasks = newState.lists[prevState.currentListIndex].tasks.set(index, data)
+      newState.lists[prevState.currentListIndex].tasks = updatedTasks
+      return newState
+    })
+  }
+
+  onListReorder(event, previousIndex, newIndex, fromId, toId) {
+    this.setState(prevState => {
+      let newState = prevState
+      const newList = reorderImmutable(newState.lists[prevState.currentListIndex].tasks, previousIndex, newIndex)
+      newState.lists[prevState.currentListIndex].tasks = newList
       return newState
     })
   }
@@ -68,7 +83,7 @@ class App extends Component {
         <SidebarContent
           lists={this.state.lists}
           createList={this.addList}
-          openList={this.setCurrentList}/>
+          openList={this.setCurrentList} />
       </div>
     return (
       <Sidebar sidebar={sidebarContent}
@@ -90,7 +105,8 @@ class App extends Component {
            name={this.state.lists[this.state.currentListIndex].name}
            tasks={ this.state.lists[this.state.currentListIndex].tasks}
            updateTask={this.updateTask}
-           createTask={this.createTask}/>
+           createTask={this.createTask}
+           onListReorder={this.onListReorder}/>
        </div>
       </Sidebar>
     )

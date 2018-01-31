@@ -16,7 +16,9 @@ class EditTaskBtn extends Component {
   render() {
     return (
       <span>
-        <button onClick={this.handleOpenModal}>
+        <button
+          onClick={this.handleOpenModal}
+          className="btn">
           {this.props.display}
         </button>
         <ReactModal

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Task from './Task.js'
 import EditTaskBtn from './EditTaskBtn.js'
 import './styles/list.css'
+import Reorder from 'react-reorder';
 
 class List extends Component {
   constructor(props) {
@@ -13,21 +14,27 @@ class List extends Component {
     return (
       <div className="list-container">
         <span className="list-title"> {this.props.name} </span>
-        <a href="http://localhost:3000/"> Share </a>
-        <ul className="list">
+        <a href="#"> Share </a>
+        <Reorder
+          className="list"
+          reorderId="task-list"
+          component="ul"
+          holdTime={100}
+          onReorder={this.props.onListReorder.bind(this)}>
           {this.props.tasks.map(item => (
             <li
               key={item.id}
-              className="list-item">
+              className="grabbable">
               <Task
                 data={item}
                 onEdit={this.saveTask} />
             </li>
-          ))}
-        </ul>
+          )).toArray()}
+        </Reorder>
         <EditTaskBtn
-         display="Create Task"
-         onSave={this.saveTask} />
+         display={<span><span className="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;&nbsp;Create Task</span>}
+         onSave={this.saveTask}
+         className="btn" />
       </div>
     )
   }
@@ -43,6 +50,7 @@ class List extends Component {
         title: data.title,
         description: data.description,
         estimate: data.estimate,
+        status: data.status,
         id: Date.now()
       }
       this.props.createTask(newItem)
