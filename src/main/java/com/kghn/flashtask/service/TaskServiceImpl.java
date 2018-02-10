@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kghn.flashtask.model.Task;
 import com.kghn.flashtask.repository.TaskRepository;
@@ -45,14 +46,15 @@ public class TaskServiceImpl implements TaskService {
 
 	/* Create data entry in database */
 	@Override
-	public ResponseEntity<Task> getBytaskId(long id) {
+	public ResponseEntity<Task> findBytaskId(long id) {
 		Task task = taskRepository.getById(id);
 		if (task == null) {
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok().body(task);
 	}
-	/*Update user data */
+
+	/* Update user data */
 	@Override
 	public ResponseEntity<Task> update(long id, Task taskValues) {
 		Task task = taskRepository.getById(id);
@@ -68,6 +70,7 @@ public class TaskServiceImpl implements TaskService {
 	}
 
 	/* search task by title */
+	@Transactional(readOnly = true)
 	@Override
 	public Future<Stream<Task>> findByTitle(String title) {
 		return taskRepository.findByTitle(title);
@@ -80,16 +83,16 @@ public class TaskServiceImpl implements TaskService {
 		if (task == null) {
 			return ResponseEntity.notFound().build();
 		}
-		if (taskValue.getTitle()!= null) {
+		if (taskValue.getTitle() != null) {
 			task.setTitle(taskValue.getTitle());
 		}
-		if (taskValue.getDiscription()!= null) {
+		if (taskValue.getDiscription() != null) {
 			task.setDiscription(taskValue.getDiscription());
 		}
-		if (taskValue.getEstimate()!= null) {
+		if (taskValue.getEstimate() != null) {
 			task.setEstimate(taskValue.getEstimate());
 		}
-		if (taskValue.getStatus()!= null) {
+		if (taskValue.getStatus() != null) {
 			task.setStatus(taskValue.getStatus());
 		}
 		Task taskU = taskRepository.save(task);

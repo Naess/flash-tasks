@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kghn.flashtask.model.Task;
@@ -48,7 +50,7 @@ public class TaskController {
 	// Get a Task
 	@GetMapping("/tasks/{taskid}")
 	public ResponseEntity<Task> findTaskById(@PathVariable(value = "taskid") long id) {
-		return taskService.getBytaskId(id);
+		return taskService.findBytaskId(id);
 	}
 
 	// Update a Task
@@ -64,8 +66,6 @@ public class TaskController {
 		return taskService.delete(id);
 	}
 
-	// Get List of Tasks by UserId
-
 	// Update a Task
 	@PatchMapping("/tasks/{taskid}")
 	public ResponseEntity<Task> partiallUpdate(@PathVariable(value = "taskid") long id,
@@ -73,8 +73,8 @@ public class TaskController {
 		return taskService.update(id, taskValues);
 	}
 
-	@GetMapping("/tasks/{searchTitle}")
-	public Future<Stream<Task>> findByTitle(String title) {
+	@GetMapping("/tasks/searchByTitle")
+	public Future<Stream<Task>> findByTitle(@RequestParam("searchTitle") String title) {
 		return taskService.findByTitle(title);
 	}
 }

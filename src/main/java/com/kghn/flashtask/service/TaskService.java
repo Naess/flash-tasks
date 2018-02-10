@@ -21,8 +21,8 @@ public interface TaskService {
 	/**
 	 * Deletes a Task.
 	 * 
-	 * @param id
-	 *            The Task id.
+	 * @param  task id
+	 *            
 	 * @return deleted Task data.
 	 */
 	ResponseEntity<Task> delete(long id);
@@ -37,28 +37,35 @@ public interface TaskService {
 	/**
 	 * Finds a Task by id.
 	 * 
-	 * @param Task
-	 *            id
+	 * @param Task id
+	 *            
 	 * @return Task data.
 	 */
-	ResponseEntity<Task> getBytaskId(long id);
+	ResponseEntity<Task> findBytaskId(long id);
 
 	/**
 	 * Updates a Task.
 	 * 
-	 * @param Task
-	 *            id
+	 * @param Task id, change values
+	 *            
 	 * @return Updated Task.
 	 */
 	ResponseEntity<Task> update(long id, Task task);
 	/**
-	 * find by a Task title.
+	 * Find Task by the task title.
 	 * 
-	 * @param Task
-	 *            id
-	 * @return Updated Task.
+	 * @param title string 
+	 *            
+	 * @return Task.
 	 */
 	Future<Stream<Task>> findByTitle(String title);
 
+	/**
+	 * Partially Updates a Task.
+	 * 
+	 * @param Task id and change values
+	 *            
+	 * @return Updated Task.
+	 */
 	ResponseEntity<Task> partialUpdate(long listid, Task taskValue);
 }

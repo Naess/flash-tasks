@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kghn.flashtask.model.TodoList;
 import com.kghn.flashtask.repository.ListRepository;
@@ -80,6 +81,7 @@ public class TodoListServiceImpl implements TodoListService {
 	}
 
     /* find by list title */
+	@Transactional(readOnly = true)
 	@Override
 	public Future<Stream<TodoList>> findByTitle(String title) {
 		

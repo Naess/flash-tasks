@@ -1,10 +1,14 @@
+/* CRUD Operations */
+
 package com.kghn.flashtask.repository;
 
 import java.util.List;
 import java.util.concurrent.Future;
 import java.util.stream.Stream;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 
@@ -24,6 +28,7 @@ public interface ListRepository extends Repository<TodoList, Long> {
 	ResponseEntity<TodoList> findById(long id);
 
 	@Async
-	Future<Stream<TodoList>> findByTitle(String title);
+	@Query(value = "SELECT t.title FROM Task t where LOWER(t.title) LIKE LOWER(:title)")
+	Future<Stream<TodoList>> findByTitle(@Param("title") String title);
 
 }
