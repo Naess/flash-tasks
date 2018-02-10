@@ -1,6 +1,8 @@
 package com.kghn.flashtask.service;
 
 import java.util.List;
+
+
 import org.springframework.http.ResponseEntity;
 
 import com.kghn.flashtask.model.User;
@@ -22,7 +24,7 @@ public interface UserService {
      * @param  user id
      * @return     deleted user info..
      */
-    ResponseEntity<User> delete(Long userid);
+    ResponseEntity<User> delete(long userid);
 
     /**
      * Finds a user all user.
@@ -35,14 +37,23 @@ public interface UserService {
      * @param  id of a user
      * @return      user data.
      */
-    ResponseEntity<User> findByuserId(Long userid);
+    ResponseEntity<User> findByuserId(long userid);
 
     /**
      * Updates a user data.
      * @param update user data
      * @return                 updated user data.
      */
-    ResponseEntity<User> update(Long userid, User user);	
+    ResponseEntity<User> update(long userid, User user);	
+    
+    
+    /**
+     * Updates a user data partially.
+     * @param update user data
+     * @return                 updated user data.
+     */
+    ResponseEntity<User> partialUpdate(long userid, User user);	
+    
     
     /**
      * Find user by email and password
@@ -51,5 +62,7 @@ public interface UserService {
      * @return
      */
     
-    User getByEmail(String email, String password);
+    ResponseEntity<User> getByEmail(User user);
+    
+    ResponseEntity<User> getByToken(String token);
 }

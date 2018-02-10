@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 
 import com.kghn.flashtask.model.Task;
+import com.kghn.flashtask.model.TodoList;
 
 
 public interface TaskRepository extends Repository<Task, Long> {
@@ -20,14 +21,14 @@ public interface TaskRepository extends Repository<Task, Long> {
     List<Task> findAll();
      
     @Async 
-    Task getBytaskId(Long taskId);
+    Task getById(long id);
    
     @Async
-    Future<List<Task>> findByuserId(Long userid);
+    Future<List<Task>> findBylist(TodoList list);
     
     Task save(Task task);
 
-    ResponseEntity<Task>  findBytaskId(Long taskId);
+    ResponseEntity<Task>  findById(long id);
      
     @Async
     @Query("SELECT t.title FROM Task t where t.title = :title") 

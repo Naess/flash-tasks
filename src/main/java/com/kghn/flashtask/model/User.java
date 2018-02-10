@@ -1,31 +1,30 @@
 package com.kghn.flashtask.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;
 
 @Entity
-@Table(name = "user", catalog = "flashtask2")
+@Table(name = "user", catalog = "flashtask")
 public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="userid")
-	private Long userId;
+	@Column(name = "userId")
+	private long userId;
 
 	@Column(name = "email", nullable = false, unique = true)
-	@Email(message = "Please provide a valid e-mail")
-	@NotEmpty(message = "Please provide an e-mail")
 	private String email;
 
 	@Transient
@@ -33,23 +32,48 @@ public class User {
 
 	private String firstname;
 	private String lastname;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "list", nullable = false)
-	private TodoList list;
 
 	@Column(name = "active")
 	private boolean active;
+
 	@Column(name = "token")
 	private String token;
 
-	
-	public Long getId() {
+	/* create a many to many relationship between users and lists */
+	@ManyToMany
+	@JoinTable(name = "list_user", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "listId", referencedColumnName = "listId"))
+	private Set<TodoList> lists = new HashSet<TodoList>();
+
+	public User() {
+
+	}
+
+	public User(String email, String password, String firstname, String lastname, boolean active, String token,
+			Set<TodoList> lists) {
+		super();
+		this.email = email;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.active = active;
+		this.token = token;
+		this.lists = lists;
+	}
+
+	public long getUserId() {
 		return userId;
 	}
 
-	public void setId(Long id) {
-		this.userId = id;
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -60,28 +84,20 @@ public class User {
 		this.password = password;
 	}
 
-	public String getFirstName() {
+	public String getFirstname() {
 		return firstname;
 	}
 
-	public void setFirstName(String name) {
-		this.firstname = name;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
-	public String getLastName() {
+	public String getLastname() {
 		return lastname;
 	}
 
-	public void setLastName(String lastname) {
+	public void setLastname(String lastname) {
 		this.lastname = lastname;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public boolean isActive() {
@@ -97,22 +113,6 @@ public class User {
 	}
 
 	public void setToken(String token) {
-		this.token = token;
-	}
-
-	public User() {
-		
-	}
-
-	public User(String email, String password, String firstname, String lastname, TodoList list, boolean active,
-			String token) {
-		super();
-		this.email = email;
-		this.password = password;
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.list = list;
-		this.active = active;
 		this.token = token;
 	}
 

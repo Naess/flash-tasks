@@ -18,14 +18,14 @@ public interface TodoListService {
      * @param 	TodoList data   
      * @return   TodoList data          
      */
-    TodoList create(String title, Long userId);
+    TodoList create(String title);
 
     /**
      * Deletes a TodoList.
      * @param id    The TodoList id.
      * @return      deleted TodoList data.
      */
-    ResponseEntity<TodoList> delete(Long listid);
+    ResponseEntity<TodoList> delete(long listid);
 
     /**
      * Finds all TodoList.
@@ -38,21 +38,21 @@ public interface TodoListService {
      * @param  Task id
      * @return      Task data.
      */
-    ResponseEntity<TodoList> findBylistId(Long listid);
+    ResponseEntity<TodoList> findBylistId(long listid);
 
     /**
      * Updates a TodoList.
      * @param  TodoList id
      * @return  Updated TodoList.
      */
-    ResponseEntity<TodoList> update(Long listid, TodoList task);
+    ResponseEntity<TodoList> update(long listid, TodoList listValue);
     
     /**
-     * Find  TodoList by user Id.
+     * Partial Updates a TodoList.
      * @param  TodoList id
-     * @return   TodoLists.
+     * @return  Updated TodoList.
      */
-    Future<List<TodoList>> findByuserId(Long listid);
+    ResponseEntity<TodoList> partialUpdate(long listid, TodoList listValue);
     
     /**
      * Find  TodoList by list title.
