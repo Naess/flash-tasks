@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User create(User userValue) {
 		User user = new User();
+		user.setActive(userValue.isActive());
 		user.setFirstname(userValue.getFirstname());
 		user.setLastname(userValue.getLastname());
 		user.setEmail(userValue.getEmail());
@@ -84,14 +85,14 @@ public class UserServiceImpl implements UserService {
 
 	/* search and authenticate users */
 	@Override
-	public ResponseEntity<User> getByEmail(User userValue) {
+	public ResponseEntity<User> getByEmail(String email, String passwd) {
 
-		User user = userRepository.getByEmail(userValue.getEmail());
+		User user = userRepository.getByEmail(email);
 
 		if (user == null) {
 			return ResponseEntity.notFound().build();
 		}
-		String pwd = userValue.getPassword();
+		String pwd = passwd;
 
 		Boolean result = new BCryptPasswordEncoder().matches(pwd, user.getPassword());
 

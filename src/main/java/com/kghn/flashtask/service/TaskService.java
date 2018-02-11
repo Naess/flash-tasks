@@ -1,8 +1,7 @@
 package com.kghn.flashtask.service;
 
 import java.util.List;
-import java.util.concurrent.Future;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
 
@@ -58,7 +57,7 @@ public interface TaskService {
 	 *            
 	 * @return Task.
 	 */
-	Future<Stream<Task>> findByTitle(String title);
+	ResponseEntity<List<Task>> findByTitle(String title);
 
 	/**
 	 * Partially Updates a Task.
@@ -67,5 +66,5 @@ public interface TaskService {
 	 *            
 	 * @return Updated Task.
 	 */
-	ResponseEntity<Task> partialUpdate(long listid, Task taskValue);
+	ResponseEntity<Task> partialUpdate(long taskid, Task taskValue, Optional<Long> listid);
 }

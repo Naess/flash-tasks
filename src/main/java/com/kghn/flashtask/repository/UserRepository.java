@@ -3,6 +3,7 @@ package com.kghn.flashtask.repository;
 
 import java.util.List;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 
@@ -24,10 +25,10 @@ public interface UserRepository extends Repository<User, Long> {
 	/* find by sent token */
 	User getByEmail(String email);
 	
-	ResponseEntity<User> findByEmail(String email);
+	ResponseEntity<User> findByEmail(@Param("email") String email);
 
 	/* find by sent token */
-	User getByToken(String token);
+	User getByToken(@Param("token") String token);
 
 
 }

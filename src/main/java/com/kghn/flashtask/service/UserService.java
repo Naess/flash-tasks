@@ -62,7 +62,11 @@ public interface UserService {
      * @return
      */
     
-    ResponseEntity<User> getByEmail(User user);
-    
+    ResponseEntity<User> getByEmail(String email, String passwd);
+    /**
+     * Find user by confirmation token
+     * @param token string
+     * @return user data
+     */
     ResponseEntity<User> getByToken(String token);
 }

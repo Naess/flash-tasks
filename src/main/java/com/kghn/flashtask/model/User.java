@@ -1,6 +1,5 @@
 package com.kghn.flashtask.model;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -8,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -21,8 +18,16 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "userId")
+	@Column(name = "user_id")
 	private long userId;
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
@@ -40,9 +45,9 @@ public class User {
 	private String token;
 
 	/* create a many to many relationship between users and lists */
-	@ManyToMany
-	@JoinTable(name = "list_user", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"), inverseJoinColumns = @JoinColumn(name = "listId", referencedColumnName = "listId"))
-	private Set<TodoList> lists = new HashSet<TodoList>();
+
+	@ManyToMany(mappedBy = "users")
+	private Set<TodoList> lists;
 
 	public User() {
 
@@ -58,14 +63,6 @@ public class User {
 		this.active = active;
 		this.token = token;
 		this.lists = lists;
-	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
 	}
 
 	public String getEmail() {

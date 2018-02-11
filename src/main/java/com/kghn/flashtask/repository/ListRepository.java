@@ -3,9 +3,6 @@
 package com.kghn.flashtask.repository;
 
 import java.util.List;
-import java.util.concurrent.Future;
-import java.util.stream.Stream;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
@@ -21,14 +18,18 @@ public interface ListRepository extends Repository<TodoList, Long> {
 	List<TodoList> findAll();
 
 	@Async
-	TodoList getById(long id);
+	TodoList getBylistId(long id);
 
 	TodoList save(TodoList list);
 
-	ResponseEntity<TodoList> findById(long id);
-
+	ResponseEntity<TodoList> findBylistId(long id);
+	/* Query using normal query title  */
 	@Async
-	@Query(value = "SELECT t.title FROM Task t where LOWER(t.title) LIKE LOWER(:title)")
-	Future<Stream<TodoList>> findByTitle(@Param("title") String title);
+	@Query(value = "SELECT * FROM list t where LOWER(t.title) LIKE LOWER(:title)", nativeQuery=true)
+	List<TodoList> findByTitle(@Param("title") String title);
+	/* Query using normal query  token*/
+	@Async
+	@Query(value = "SELECT * FROM list t where LOWER(t.token) LIKE LOWER(:token)", nativeQuery=true)
+	TodoList findByToken(@Param("token") String token);
 
 }

@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,10 +22,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import  com.kghn.flashtask.model.Task;
+import com.kghn.flashtask.model.Task;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -36,8 +33,8 @@ public class TodoList {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "listId")
-	private long id;
+	@Column(name = "list_id")
+	private long listId;
 	private String title;
 	private boolean sharable;
 	private String token;
@@ -52,25 +49,35 @@ public class TodoList {
 	@LastModifiedDate
 	private Date modified;
 
-	@OneToMany(mappedBy = "list")
-	private Set<Task> task = new HashSet<Task>();
-
-
+	/* create a many to one relationship between users and lists */
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JsonBackReference
-	@JoinTable(name = "list_user", joinColumns = @JoinColumn(name = "listId", referencedColumnName = "listId"), inverseJoinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId"))
-	private Set<User> users = new HashSet<User>();
+	@JoinTable(name = "list_task", joinColumns = @JoinColumn(name = "list_id", referencedColumnName = "list_id"), inverseJoinColumns = @JoinColumn(name = "task_id", referencedColumnName = "task_id"))
+	private Set<Task> tasks = new HashSet<>();
+
+	/*
+	 * create a many to one relationship between users and lists and user Json
+	 * properties to break the inifinity loop
+	 */
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "list_user", joinColumns = @JoinColumn(name = "list_id", referencedColumnName = "list_id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"))
+	private Set<User> users = new HashSet<>();
 
 	public TodoList() {
 		super();
 	}
 
-	public TodoList(String title, String createdBy, String modifiedBy) {
-		this();
-		this.setTitle(title);
+	public TodoList(String title) {
+		this(title, null, null);
 	}
 
-	public TodoList(String title, boolean sharable, String token, Set<Task> taskId, Date created, Date modified) {
+	public TodoList(String title, Set<Task> tasks, Set<User> users) {
+		super();
+		this.title = title;
+		this.tasks = tasks;
+		this.users = users;
+	}
+
+	public TodoList(String title, boolean sharable, String token, Date created, Date modified) {
 		super();
 		this.title = title;
 		this.sharable = sharable;
@@ -80,12 +87,20 @@ public class TodoList {
 
 	}
 
-	public long getId() {
-		return id;
+	public long getListId() {
+		return listId;
 	}
 
-	public void setId(long listid) {
-		this.id = listid;
+	public void setListId(long listId) {
+		this.listId = listId;
+	}
+
+	/*
+	 * public void setTask(Set<Task> tasks) { this.tasks = tasks; }
+	 */
+
+	public Set<Task> getTask() {
+		return tasks;
 	}
 
 	public String getTitle() {
@@ -128,12 +143,20 @@ public class TodoList {
 		this.modified = modified;
 	}
 
+	public Set<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
+
 	public Set<Task> getTasks() {
-		return task;
+		return tasks;
 	}
 
 	public void setTasks(Set<Task> tasks) {
-		this.task = tasks;
+		this.tasks = tasks;
 	}
 
 }

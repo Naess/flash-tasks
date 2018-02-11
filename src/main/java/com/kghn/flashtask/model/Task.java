@@ -1,14 +1,17 @@
 package com.kghn.flashtask.model;
 
 import java.util.Date;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -17,10 +20,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import  com.kghn.flashtask.model.TodoList;
-
+import com.kghn.flashtask.model.TodoList;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -30,12 +31,14 @@ public class Task {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "taskId")
-	private long id;
+	@Column(name = "task_id")
+	private long taskId;
 	private String title;
 	private String discription;
 	private String estimate;
-	private String status;
+
+	@Enumerated(EnumType.STRING)
+	private Status status;
 
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -46,39 +49,34 @@ public class Task {
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	private Date modified;
-
-	/*@ManyToMany
-	@JoinTable(name = "list_task", joinColumns = @JoinColumn(name = "taskId", referencedColumnName = "taskId"), 
-	inverseJoinColumns = @JoinColumn(name = "listId", referencedColumnName = "listId"))
-	private Set<TodoList> lists = new HashSet<TodoList>();*/
+	
+	
+	/* create a many to many relationship between users and lists */
+	@ManyToMany(mappedBy = "tasks")
+	private Set<TodoList> lists;
 	
 
-	@ManyToOne
-	@JoinColumn (name="listId")
-	@JsonBackReference
-	private TodoList list;
-
-	// default non arg constructor
+	// constructor
 	public Task() {
-
+		super();
 	}
-
-
-	public Task(String title, String estimate, String status, Date created) {
+	public Task(String title, String discription, String estimate, Status status, Date created, Date modified, Set<TodoList> lists) {
 		super();
 		this.title = title;
+		this.discription = discription;
 		this.estimate = estimate;
 		this.status = status;
 		this.created = created;
+		this.modified = modified;
+		this.lists = lists;
+		
 	}
-
-
 	public long getTaskId() {
-		return id;
+		return taskId;
 	}
 
-	public void setTaskId(long id) {
-		this.id = id;
+	public void setTaskId(long taskId) {
+		this.taskId = taskId;
 	}
 
 	public String getTitle() {
@@ -105,11 +103,11 @@ public class Task {
 		this.estimate = estimate;
 	}
 
-	public String getStatus() {
+	public Status getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Status status) {
 		this.status = status;
 	}
 
@@ -128,14 +126,7 @@ public class Task {
 	public void setModified(Date modified) {
 		this.modified = modified;
 	}
-
-
-	public TodoList getList() {
-		return list;
-	}
-
-	public void setList(TodoList list) {
-		this.list = list;
-	}
+	
+	
 
 }

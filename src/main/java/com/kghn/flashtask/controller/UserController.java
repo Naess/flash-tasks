@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kghn.flashtask.model.User;
@@ -75,14 +76,14 @@ public class UserController {
 	// Api call for login
 	@PostMapping("/users/sign-in")
 	
-		public ResponseEntity<User> signIn(@RequestBody User userValue) {
-		return userService.getByEmail(userValue);
+		public ResponseEntity<User> signIn(@RequestParam("email")String email, @RequestParam("passwd")String passwd) {
+		return userService.getByEmail(email, passwd);
 	}
 
 	
 
 	@PostMapping("/users/sign-up")
-	public User signUp(@RequestBody User user) {
+	public User signUp(@Valid @RequestBody User user) {
 		return userService.create(user);
 	}
 }

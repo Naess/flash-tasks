@@ -6,13 +6,11 @@
 package com.kghn.flashtask.controller;
 
 import java.util.List;
-import java.util.concurrent.Future;
-import java.util.stream.Stream;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,12 +67,12 @@ public class TaskController {
 	// Update a Task
 	@PatchMapping("/tasks/{taskid}")
 	public ResponseEntity<Task> partiallUpdate(@PathVariable(value = "taskid") long id,
-			@Valid @RequestBody Task taskValues) {
+			@Valid @RequestBody Task taskValues, @RequestParam("listId") Optional<String> listId) {
 		return taskService.update(id, taskValues);
 	}
 
 	@GetMapping("/tasks/searchByTitle")
-	public Future<Stream<Task>> findByTitle(@RequestParam("searchTitle") String title) {
+	public ResponseEntity<List<Task>> findByTitle(@RequestParam("searchTitle") String title) {
 		return taskService.findByTitle(title);
 	}
 }

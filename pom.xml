@@ -5,7 +5,7 @@
 
 	<groupId>com.kghn.flashtask</groupId>
 	<artifactId>flashtask</artifactId>
-	<version>1.0.4-SNAPSHOT</version>
+	<version>1.0.5-SNAPSHOT</version>
 
 	<name>flashtask</name>
 	<description>Flash Task is a web-based creative collaboration tool </description>
