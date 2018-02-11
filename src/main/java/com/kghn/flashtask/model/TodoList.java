@@ -99,10 +99,6 @@ public class TodoList {
 	 * public void setTask(Set<Task> tasks) { this.tasks = tasks; }
 	 */
 
-	public Set<Task> getTask() {
-		return tasks;
-	}
-
 	public String getTitle() {
 		return title;
 	}

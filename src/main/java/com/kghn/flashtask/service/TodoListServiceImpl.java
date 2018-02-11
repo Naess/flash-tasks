@@ -227,8 +227,8 @@ public class TodoListServiceImpl implements TodoListService {
 		sharelink.setTo(email);
 		sharelink.setSubject("Sharing Confirmation");
 		sharelink.setText("Accept the share invitation for the Todolist task, Please click the link below:\n" + appUrl
-				+ "/{token}?token=" + list.getToken());
-		sharelink.setFrom("noreply@domain.com");
+				+ ":8080/api/v1/list/{token}?token=" + list.getToken());
+		sharelink.setFrom("wmoc0074@gmail.com");
 
 		emailService.sendEmail(sharelink);
 
