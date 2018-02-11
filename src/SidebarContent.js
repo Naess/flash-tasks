@@ -24,8 +24,9 @@ class SidebarContent extends Component {
     if (!this.state.listName.length) {
       return
     }
+
     this.props.createList({
-      name: this.state.listName
+      title: this.state.listName
     })
     this.setState({ listName: '' })
   }
@@ -42,8 +43,8 @@ class SidebarContent extends Component {
           {this.props.lists.map((list, index) => (
             <li
               onClick={() => this.openList(index)}
-              key={list.name}>
-              {list.name}
+              key={list.id}>
+              {list.title}
             </li>
           ))}
         </ul>

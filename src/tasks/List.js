@@ -23,7 +23,7 @@ class List extends Component {
           onReorder={this.props.onListReorder.bind(this)}>
           {this.props.tasks.map(item => (
             <li
-              key={item.id}
+              key={item.taskId}
               className="grabbable">
               <Task
                 data={item}
@@ -43,7 +43,7 @@ class List extends Component {
     if (!data.title.length) {
       return
     }
-    if (data.id) {
+    if (data.taskId) {
       this.props.updateTask(data)
     } else {
       const newItem = {
@@ -51,7 +51,7 @@ class List extends Component {
         description: data.description,
         estimate: data.estimate,
         status: data.status,
-        id: Date.now()
+        taskId: Date.now()
       }
       this.props.createTask(newItem)
     }

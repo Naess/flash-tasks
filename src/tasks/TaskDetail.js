@@ -7,9 +7,10 @@ class TaskDetail extends Component {
       title: props.data.title || '',
       description: props.data.description || '',
       estimate: props.data.estimate || '',
-      id: props.data.id || '',
+      taskId: props.data.taskId || '',
       status: props.data.status || 'Not Started'
     }
+    console.log(props.data);
     this.statuses = ['Not Started', 'In Progress', 'Done']
     this.handleChange = this.handleChange.bind(this)
   }
