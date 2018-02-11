@@ -15,16 +15,16 @@ class Login extends Component {
     const { history } = this.props
 
     const proxyurl = "https://cors-anywhere.herokuapp.com/"
-    axios.post(proxyurl + 'http://ec2-18-219-37-238.us-east-2.compute.amazonaws.com:8080/api/v1/users/'+
-      encodeURIComponent(this.emailInput.value)+'/'+
+    axios.post(proxyurl + 'http://ec2-18-219-37-238.us-east-2.compute.amazonaws.com:8080/api/v1/users/sign-in?email='+
+      encodeURIComponent(this.emailInput.value)+'&passwd='+
       encodeURIComponent(this.passwordInput.value)
       ,{email:this.emailInput.value, password:this.passwordInput.value})
       .then((response) => {
-        console.log(response.data)
+        console.log()
         cookies.set('userEmail', this.emailInput.value, { path: '/' })
-        cookies.set('userFirst', 'Caleb', { path: '/' })
-        cookies.set('userLast', 'Naess', { path: '/' })
-        cookies.set('userId', 2, { path: '/' })
+        cookies.set('userFirst', response.data.firstname, { path: '/' })
+        cookies.set('userLast', response.data.lastname, { path: '/' })
+        cookies.set('userId', response.data.userId, { path: '/' })
         history.push('/')
       })
       .catch((error) => {

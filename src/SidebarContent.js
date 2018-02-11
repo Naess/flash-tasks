@@ -43,7 +43,7 @@ class SidebarContent extends Component {
           {this.props.lists.map((list, index) => (
             <li
               onClick={() => this.openList(index)}
-              key={list.id}>
+              key={list.listId}>
               {list.title}
             </li>
           ))}

@@ -17,7 +17,9 @@ class Login extends Component {
       'email': this.emailInput.value,
       'lastname': this.lastNameInput.value,
       'firstname': this.firstNameInput.value,
-      'password': this.passwordInput.value
+      'password': this.passwordInput.value,
+      'token': 'string',
+      'userId': 0
     }
     const proxyurl = "https://cors-anywhere.herokuapp.com/"
     axios.post(proxyurl + 'http://ec2-18-219-37-238.us-east-2.compute.amazonaws.com:8080/api/v1/users/sign-up', newUser)

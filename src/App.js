@@ -28,7 +28,7 @@ class App extends Component {
       sidebarOpen: false,
       lists: [
         {
-          id: 100000,
+          listId: 100000,
           title: 'My First List',
           tasks: Immutable.List()
         }
@@ -45,9 +45,7 @@ class App extends Component {
 
   componentWillMount() {
     const proxyurl = "https://cors-anywhere.herokuapp.com/"
-    axios.get(proxyurl + 'http://ec2-18-219-37-238.us-east-2.compute.amazonaws.com:8080/api/v1/lists/'/*+this.state.userId*/,{
-      listId: this.state.userId
-    })
+    axios.patch(proxyurl + 'http://ec2-18-219-37-238.us-east-2.compute.amazonaws.com:8080/api/v1/list/{userId}?userId='+this.state.userId)
       .then((response) => {
         console.log(response.data)
         for (let i = 0; i < response.data.length; i++) {
@@ -72,16 +70,18 @@ class App extends Component {
 
   addList(list) {
     console.log(list)
+    list.userId = this.state.userId
     const proxyurl = "https://cors-anywhere.herokuapp.com/"
     axios.post(proxyurl +
       'http://ec2-18-219-37-238.us-east-2.compute.amazonaws.com:8080/api/v1/list?title='
-      +encodeURIComponent(list.title),
+      +encodeURIComponent(list.title)+
+      '&userId='+encodeURIComponent(this.state.userId),
       list)
       .then((response) => {
         console.log('response');
         console.log(response.data)
         list.tasks = Immutable.List()
-        list.id = response.data.id
+        list.listId = response.data.listId
         this.setState(prevState => ({
           lists: prevState.lists.concat(list)
         }))
@@ -111,10 +111,24 @@ class App extends Component {
     }
     console.log('createTask');
     console.log(newTask);
+    console.log('list');
+    console.log(this.state.lists[this.state.currentListIndex]);
     const proxyurl = "https://cors-anywhere.herokuapp.com/"
     axios.post(proxyurl + 'http://ec2-18-219-37-238.us-east-2.compute.amazonaws.com:8080/api/v1/tasks', newTask)
       .then((response) => {
         console.log(response.data)
+        axios.patch(proxyurl + 'http://ec2-18-219-37-238.us-east-2.compute.amazonaws.com:8080/api/v1/list/{id}?id='+
+        encodeURIComponent(this.state.lists[this.state.currentListIndex].listId)+
+        '&taskId='+encodeURIComponent(response.data.taskId)+
+        '&userId='+encodeURIComponent(this.state.userId)+
+        '&listId='+encodeURIComponent(this.state.lists[this.state.currentListIndex].listId),
+      {list: this.state.lists[this.state.currentListIndex]})
+          .then((response) => {
+            console.log(response.data)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
       })
       .catch((error) => {
         console.log(error)

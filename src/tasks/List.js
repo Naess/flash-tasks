@@ -43,6 +43,7 @@ class List extends Component {
     if (!data.title.length) {
       return
     }
+
     if (data.taskId) {
       this.props.updateTask(data)
     } else {

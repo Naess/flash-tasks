@@ -5,11 +5,11 @@ class Task extends Component {
 
   getStatusClass() {
     switch (this.props.data.status) {
-      case 'Not Started':
+      case 'NOT_STARTED':
         return 'status-not-started'
-      case 'In Progress':
+      case 'ACTIVE':
         return 'status-in-progress'
-      case 'Done':
+      case 'COMPLETED':
         return 'status-done'
       default:
         return 'status-not-started'
