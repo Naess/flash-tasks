@@ -29,7 +29,7 @@ class Login extends Component {
         cookies.set('userLast', response.data.lastname, { path: '/' })
         cookies.set('userEmail', response.data.email, { path: '/' })
         cookies.set('userId', response.data.userId, { path: '/' })
-        history.push('/')
+        history.push('/flash-tasks/')
       })
       .catch((error) => {
         console.log(error)

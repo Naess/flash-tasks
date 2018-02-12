@@ -13,7 +13,7 @@ import registerServiceWorker from './registerServiceWorker'
 const Auth = () => (
   <div>
     <Switch>
-      <Route exact path='/' component={App}/>
+      <Route exact path='/flash-tasks/' component={App}/>
       <Route path='/login' component={Login}/>
       <Route path='/signup' component={Signup}/>
     </Switch>
